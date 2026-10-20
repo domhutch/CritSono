@@ -146,21 +146,23 @@ without rebuilding it. To bring it back:
 1. **Obtain rights or supply your own templates.** Either get written permission
    to use the official FUSIC/ICS report-form artwork, or create your own
    A4-portrait SVG templates. See [`docs/ICS_FORMS.md`](./docs/ICS_FORMS.md).
-2. **Run the helper.** `npm run enable:ics-forms` restores the original templates
-   from `main` (or leaves your own in place) and turns the flag on via
-   `.env.local`. This is the single supported re-enable step.
-3. **Confirm the build.** `npm run check`, then verify an **ICS form** print from a
+2. **Copy the templates into `public/templates/`.** That folder is git-ignored, so
+   the artwork stays local and is never committed.
+3. **Turn the flag on.** Add `VITE_ENABLE_ICS_FORMS=true` to `.env.local` for local
+   development, or set it in the build environment.
+4. **Confirm the build.** `npm run check`, then verify an **ICS form** print from a
    Heart, Lung, or Abdomen case.
-4. **Enable it in CI/hosting, if publishing with the feature on.** Set the
-   `VITE_ENABLE_ICS_FORMS=true` repository variable and pass it to the deploy
-   workflow's build step (mirroring `VITE_GOOGLE_CLIENT_ID`).
-5. **Update the rights records.** Record the confirmed permission or the
+5. **Enable it in CI/hosting, if publishing with the feature on.** Set the
+   `VITE_ENABLE_ICS_FORMS=true` repository variable, pass it to the deploy
+   workflow's build step (mirroring `VITE_GOOGLE_CLIENT_ID`), and supply the
+   templates from a private source you control.
+6. **Update the rights records.** Record the confirmed permission or the
    replacement templates in [`ASSET_CREDITS.md`](./ASSET_CREDITS.md) and close the
    matching item above.
 
 Everything needed for the path — the flag (`src/config/features.ts`), the builders
-(`src/domain/*-ics-form.ts`), the script (`scripts/enable-ics-forms.mjs`), and the
-guide (`docs/ICS_FORMS.md`) — ships in the repository today.
+(`src/domain/*-ics-form.ts`), and the guide (`docs/ICS_FORMS.md`) — ships in the
+repository today; only the artwork itself is supplied privately.
 
 ## User feedback backlog
 

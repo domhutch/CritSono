@@ -10,7 +10,8 @@ pocus-logbook-backup-*.json
 .env.local
 .env.*.local
 
-# Official report-form templates are not distributed with this repository.
+# Official report-form templates are supplied privately and are not distributed
+# with this repository. Drop your own templates in here; they stay local.
 # See docs/ICS_FORMS.md and ASSET_CREDITS.md.
 public/templates/
 

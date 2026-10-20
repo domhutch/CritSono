@@ -39,36 +39,11 @@ distributed here.
 
 ## Enabling the feature
 
-There are two routes: a one-command helper for the common case, or manual steps
-if you want to control each part.
+### 1. Put the templates in place
 
-### Quick path: the helper script
-
-```sh
-npm run enable:ics-forms
-```
-
-This script (`scripts/enable-ics-forms.mjs`):
-
-1. Checks for the four template files under `public/templates/`.
-2. If any are missing, restores them from the `main` branch in git history
-   (where the originals still live). It never overwrites templates that already
-   exist. Pass `--no-restore` (`npm run enable:ics-forms -- --no-restore`) to
-   skip this and supply your own templates instead.
-3. Writes `VITE_ENABLE_ICS_FORMS=true` to `.env.local` so local builds turn the
-   feature on.
-
-It is safe to re-run. It does **not** decide whether you are allowed to use a
-template — that remains your responsibility. Rebuild with `npm run check` or
-`npm run build` afterwards.
-
-### Manual path
-
-#### 1. Provide your own templates
-
-Create `public/templates/` and add template files. Use these filenames, which the
-builders expect (or update the filenames in the three `*-ics-form.ts` files to
-match whatever you use):
+Create `public/templates/` and copy your report-form templates in. Use these
+filenames, which the builders expect (or update the filenames in the three
+`*-ics-form.ts` files to match whatever you use):
 
 | File | Used by |
 | --- | --- |
@@ -83,34 +58,36 @@ template uses different dimensions, update the `viewBox` in
 `createFusicFormSheet()` (`src/domain/fusic-forms.ts`) and the field coordinates
 in the `*-ics-form.ts` builders to match.
 
+`public/templates/` is **git-ignored**, so the artwork stays on your machine and
+is never committed to the repository. Copy the files in directly; there is no
+download step.
+
 **You are responsible for ensuring you have the right to use any template you
-add.** Do not commit templates whose redistribution is not permitted. If you are
-granted permission to use the official ICS forms, keep the source PDFs out of the
-repository unless that permission explicitly allows redistribution.
+add.** Keep the official source PDFs out of the repository unless you have
+permission that explicitly allows redistribution.
 
-#### 2. Turn the flag on
+### 2. Turn the flag on
 
-`ENABLE_ICS_FORMS` is read at build time from `VITE_ENABLE_ICS_FORMS`. Set it to
-`true`:
-
-```sh
-VITE_ENABLE_ICS_FORMS=true npm run build
-```
-
-For a persistent local setting, add a `.env.local` file (git-ignored) with:
+`ENABLE_ICS_FORMS` is read at build time from `VITE_ENABLE_ICS_FORMS`. For local
+development, create a `.env.local` file (also git-ignored) with:
 
 ```sh
 VITE_ENABLE_ICS_FORMS=true
 ```
 
-`public/templates/` and `.env.local` are both git-ignored, so restored or
-custom templates and the local flag are not accidentally committed.
+Or set it for a single build:
+
+```sh
+VITE_ENABLE_ICS_FORMS=true npm run build
+```
 
 For GitHub Pages, add a repository **Actions variable** named
 `VITE_ENABLE_ICS_FORMS` with the value `true`, and pass it in the deploy
 workflow's build step (mirroring the existing `VITE_GOOGLE_CLIENT_ID` wiring).
+Note that a hosted deployment also needs the template files at build time, so
+supply them from a private source or build artifact you control.
 
-#### 3. Verify
+### 3. Verify
 
 Run `npm run check`, then use the **ICS form** action on a Heart, Lung, or
 Abdomen case (or the bulk downloads in Settings) and confirm the printed output
@@ -120,17 +97,12 @@ aligns with your template.
 
 Unset `VITE_ENABLE_ICS_FORMS` (or set it to anything other than `true`) — for
 example by deleting the line from `.env.local`. The builders and templates can
-stay in place; only the UI actions are hidden.
+stay in place; only the UI actions are hidden. Removing `public/templates/` also
+works.
 
-## Restoring the original templates
+## Restoring the official templates
 
-The official templates historically shipped in this repository. If you are the
-rights holder or have written permission, you can restore the copies that were
-removed:
-
-```sh
-git checkout main -- public/templates/     # or: npm run enable:ics-forms
-```
-
-Confirm your permission covers redistribution before doing so in a repository you
-publish.
+The official templates are not distributed with this repository. If you are the
+rights holder or hold written permission, copy them into `public/templates/` from
+your own private copy. Confirm your permission covers redistribution before
+publishing a build that includes them.
