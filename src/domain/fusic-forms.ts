@@ -106,9 +106,9 @@ export function createFusicFormSheet(templateUrl: string, fields: string) {
 /**
  * Path to a report-form template under `public/templates/`.
  *
- * The official FUSIC®/ICS templates are not distributed with this open-source
- * repository (see `docs/ICS_FORMS.md`). A deployment that enables the ICS-form
- * feature must supply its own templates with these filenames.
+ * The official FUSIC®/ICS report-form templates ship with this repository and
+ * are used with the ICS's written permission (October 2026); see
+ * `docs/ICS_FORMS.md` and `ASSET_CREDITS.md`.
  */
 export function formTemplateUrl(filename: string) {
   return `${import.meta.env.BASE_URL}templates/${filename}`;

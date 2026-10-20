@@ -129,7 +129,7 @@ function createAbdomenFormSheets(entry: AbdomenCaseFields, operatorName: string)
 export function createAbdomenIcsFormPrintDocument(entry: AbdomenCaseFields, operatorName = "") {
   return createFusicFormCollectionPrintDocument({
     title: `Abdomen case report form · ${entry.date}`,
-    previewNote: "Prefilled from this SonoCrit Abdomen case using the two-page ICS Abdomen report-form layout (Assessment Pack 2025 v1). Demographics and operator appear when recorded; signatures and trainer feedback remain blank for completion by hand.",
+    previewNote: "Prefilled from this CritSono Abdomen case using the two-page ICS Abdomen report-form layout (Assessment Pack 2025 v1). This form supports, and does not replace, formal FUSIC® accreditation: competency sign-off and module recognition remain part of the formal FUSIC®/ICS process, verified through the FUSIC learning portal. Demographics and operator appear when recorded; signatures and trainer feedback remain blank for completion by hand.",
     sheets: createAbdomenFormSheets(entry, operatorName),
   });
 }

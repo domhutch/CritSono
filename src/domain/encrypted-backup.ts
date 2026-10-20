@@ -136,10 +136,10 @@ export async function decryptBackup(serializedEnvelope: string, passphrase: stri
   try {
     value = JSON.parse(serializedEnvelope);
   } catch {
-    throw new Error("This is not a valid encrypted SonoCrit: POCUS Logbook backup.");
+    throw new Error("This is not a valid encrypted CritSono: POCUS Logbook backup.");
   }
   if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new Error("This is not a valid encrypted SonoCrit: POCUS Logbook backup.");
+    throw new Error("This is not a valid encrypted CritSono: POCUS Logbook backup.");
   }
   const envelope = value as Partial<EncryptedBackupEnvelope>;
   if (

@@ -10,10 +10,8 @@ pocus-logbook-backup-*.json
 .env.local
 .env.*.local
 
-# Official report-form templates are supplied privately and are not distributed
-# with this repository. Drop your own templates in here; they stay local.
-# See docs/ICS_FORMS.md and ASSET_CREDITS.md.
-public/templates/
+# Report-form templates live here and ship with the repository. See
+# docs/ICS_FORMS.md and ASSET_CREDITS.md for the recorded ICS permission.
 
 # Capacitor platform projects are generated with `cap add`.
 ios/

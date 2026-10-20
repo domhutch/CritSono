@@ -1,10 +1,10 @@
-# SonoCrit: POCUS Logbook Roadmap
+# CritSono: POCUS Logbook Roadmap
 
 ## Product direction
 
 Build an open-source, offline-first logbook for personal POCUS training and post-certification practice. The primary product is a mobile-friendly installable PWA. Packaging the same codebase as iOS and Android apps is a future stretch goal, not part of the current plan.
 
-The product stores cases on the device and works offline. There is no SonoCrit: POCUS Logbook account service or app-operated data backend. Optional user-managed encrypted Google Drive backup is available when a Google OAuth client ID is configured at build time. Provider sync and native app packaging are future stretch goals; any native app builds must include the web assets in the app package and must not rely on downloading the app from a hosted web server at launch.
+The product stores cases on the device and works offline. There is no CritSono: POCUS Logbook account service or app-operated data backend. Optional user-managed encrypted Google Drive backup is available when a Google OAuth client ID is configured at build time. Provider sync and native app packaging are future stretch goals; any native app builds must include the web assets in the app package and must not rely on downloading the app from a hosted web server at launch.
 
 ## Product principles
 
@@ -128,41 +128,35 @@ The initial repository and dependency review is recorded in [`OPEN_SOURCE_REVIEW
 
 - [x] Add contributor setup and contribution guidance, issue templates, and security reporting instructions.
 - [x] Generate production dependency notices and document the source and rights status of public assets.
-- [ ] Confirm redistribution rights for uncleared public assets or replace them before release; review generated notices before each release.
-- [x] Remove bundled FUSIC/ICS report-form artwork from the repository and disable the report-form printing feature by default behind `ENABLE_ICS_FORMS`. Restoring the artwork or enabling the feature is now a deliberate step documented in [`docs/ICS_FORMS.md`](./docs/ICS_FORMS.md), pending confirmed redistribution rights.
+- [x] Confirm redistribution rights for public assets or replace them before release. *Resolved 20 October 2026: the ICS permission covers the report-form templates (logo included), and the portrait photograph and icon are the maintainer's own work under the project license — see [`ASSET_CREDITS.md`](./ASSET_CREDITS.md). Review generated notices and asset rights before each release as an ongoing practice.*
+- [x] Remove bundled FUSIC/ICS report-form artwork from the repository and disable the report-form printing feature by default behind `ENABLE_ICS_FORMS`. Restoring the artwork or enabling the feature is now a deliberate step documented in [`docs/ICS_FORMS.md`](./docs/ICS_FORMS.md). *Superseded: the ICS confirmed permission in October 2026; the feature is enabled by default again — see [Report-form printing](#report-form-printing-rights-resolved-artwork-pending-commit).*
 - [x] Run `npm ci` and `npm run check` on pull requests, and pin GitHub Actions to verified immutable commit SHAs.
 - [ ] Add a concise architecture guide for data flow, pathway extensions, and storage migrations.
 - [x] Extract case lifecycle, settings persistence, and sample-data management from `App.tsx` into focused hooks.
 - [x] Move shared interface colors into `src/theme.css` and reuse semantic palette tokens across pages and pathways.
 - [ ] Refactor oversized UI modules only when a concrete behavior change can be isolated and regression-tested.
 
-#### Path to re-enable report-form printing
+#### Report-form printing (rights resolved; artwork pending commit)
 
-The optional report-form printing feature (Heart, Lung, and Abdomen) is implemented
-and retained, but disabled and unshipped pending confirmed redistribution rights
-for the report-form artwork. The feature is preserved so it can be restored
-without rebuilding it. To bring it back:
+The optional report-form printing feature (Heart, Lung, and Abdomen) is
+implemented and **enabled by default**. In October 2026 the ICS confirmed in
+writing that reproducing the content of the report-form templates in a
+third-party application is not an issue, provided the application is clear that
+it supports the FUSIC® accreditation process rather than replacing it. See
+[`docs/ICS_FORMS.md`](./docs/ICS_FORMS.md) and
+[`ASSET_CREDITS.md`](./ASSET_CREDITS.md).
 
-1. **Obtain rights or supply your own templates.** Either get written permission
-   to use the official FUSIC/ICS report-form artwork, or create your own
-   A4-portrait SVG templates. See [`docs/ICS_FORMS.md`](./docs/ICS_FORMS.md).
-2. **Copy the templates into `public/templates/`.** That folder is git-ignored, so
-   the artwork stays local and is never committed.
-3. **Turn the flag on.** Add `VITE_ENABLE_ICS_FORMS=true` to `.env.local` for local
-   development, or set it in the build environment.
-4. **Confirm the build.** `npm run check`, then verify an **ICS form** print from a
-   Heart, Lung, or Abdomen case.
-5. **Enable it in CI/hosting, if publishing with the feature on.** Set the
-   `VITE_ENABLE_ICS_FORMS=true` repository variable, pass it to the deploy
-   workflow's build step (mirroring `VITE_GOOGLE_CLIENT_ID`), and supply the
-   templates from a private source you control.
-6. **Update the rights records.** Record the confirmed permission or the
-   replacement templates in [`ASSET_CREDITS.md`](./ASSET_CREDITS.md) and close the
-   matching item above.
+Remaining steps:
 
-Everything needed for the path — the flag (`src/config/features.ts`), the builders
-(`src/domain/*-ics-form.ts`), and the guide (`docs/ICS_FORMS.md`) — ships in the
-repository today; only the artwork itself is supplied privately.
+1. **Commit the templates.** Copy the four A4-portrait SVG templates into
+   `public/templates/` (no longer git-ignored) and commit them.
+2. **Optimize and confirm.** Run `npm run optimize:forms`, then `npm run check`,
+   and verify an **ICS form** print from a Heart, Lung, or Abdomen case.
+3. **Update the rights records.** Record the templates' final state in
+   [`ASSET_CREDITS.md`](./ASSET_CREDITS.md) and close the matching item above.
+
+*Logo scope: resolved 20 October 2026. The example form sent to the ICS
+included the FUSIC® logo artwork and their no-concern confirmation covers it.*
 
 ## User feedback backlog
 

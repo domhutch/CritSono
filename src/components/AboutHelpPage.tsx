@@ -46,7 +46,7 @@ function AboutHelpPage({ onBack }: AboutHelpPageProps) {
         Back to Settings
       </button>
       <header className="about-help-heading">
-        <p className="eyebrow">SonoCrit: POCUS Logbook</p>
+        <p className="eyebrow">CritSono: POCUS Logbook</p>
         <h2 id="about-help-heading">About &amp; Help</h2>
         <p>A quick guide to recording, reviewing, and keeping your logbook safe.</p>
       </header>
@@ -77,7 +77,10 @@ function AboutHelpPage({ onBack }: AboutHelpPageProps) {
 
       <section className="settings-panel" aria-labelledby="licenses-heading">
         <h3 id="licenses-heading">Open-source licenses</h3>
-        <p>SonoCrit is licensed under Apache-2.0. Production dependency notices are included with this app.</p>
+        <p>CritSono is licensed under Apache-2.0. Production dependency notices are included with this app.</p>
+        <p className="about-help-note">
+          CritSono is an independent project and is not affiliated with, endorsed by, or connected to the Intensive Care Society (ICS) or the FUSIC® programme. CritSono supports the FUSIC® accreditation process rather than replacing it; competency sign-off and module recognition remain part of the formal FUSIC®/ICS process, verified through the FUSIC learning portal. Beyond these curriculum references, CritSono is not affiliated with, sponsored by, endorsed by, or connected to any other organisation, course, or training programme.
+        </p>
         <p className="about-help-note">
           <a href={`${import.meta.env.BASE_URL}PROJECT_LICENSE.txt`}>Project license</a>
           {" · "}

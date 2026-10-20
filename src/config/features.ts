@@ -9,12 +9,14 @@
 /**
  * ICS/FUSIC report-form printing.
  *
- * OFF by default. The official FUSIC®/Intensive Care Society (ICS) report-form
- * templates that this feature overlays case data onto are **not** distributed
- * with this open-source repository, because their redistribution rights are held
- * by the ICS and are not granted here. See `docs/ICS_FORMS.md` for how to enable
- * the feature and supply your own templates.
+ * ON by default. In October 2026 the Intensive Care Society (ICS) confirmed in
+ * writing that there is no issue with reproducing the content of the FUSIC®
+ * report-form templates within a third-party application, provided it is clear
+ * that the application supports the FUSIC® accreditation process rather than
+ * replacing it; competency sign-off remains part of the formal FUSIC®/ICS
+ * process, verified through the FUSIC learning portal. See `docs/ICS_FORMS.md`
+ * and the recorded permission in `ASSET_CREDITS.md`.
  *
- * Set `VITE_ENABLE_ICS_FORMS=true` at build time to reveal the ICS form actions.
+ * Set `VITE_ENABLE_ICS_FORMS=false` at build time to hide the ICS form actions.
  */
-export const ENABLE_ICS_FORMS = import.meta.env.VITE_ENABLE_ICS_FORMS === "true";
+export const ENABLE_ICS_FORMS = import.meta.env.VITE_ENABLE_ICS_FORMS !== "false";

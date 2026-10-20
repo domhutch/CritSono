@@ -1,48 +1,79 @@
-# SonoCrit: POCUS Logbook
+# CritSono: POCUS Logbook
 
-A feature rich, open source and modifiable logbook for Point of Care Ultrasound Logging in Critical Care environments.
-Offline local storage in your browsers indexedDB with the option for encrypted/unencrypted backup.
-A few sick features included (pun intended)
+An open-source, offline-first logbook for Point of Care Ultrasound (POCUS)
+recording in critical care.
 
-Offline-first POCUS logbook scaffold for the web, with a path to bundled iOS and Android apps.
+- **Local-first:** cases live in your browser's IndexedDB. Nothing is uploaded
+  or synced unless you choose to back it up yourself.
+- **Six pathways:** Heart, Lung, Abdomen, DVT, HD, and Vascular, each with FUSIC
+  curriculum targets and progress tracking.
+- **Metrics and reports:** rolling metrics, print-ready A4 case reports,
+  multi-page logbook PDFs, and CSV export.
+- **Encrypted backups:** versioned, passphrase-protected backups to a file or to
+  your own Google Drive.
+- **Installable PWA** with a path to bundled iOS and Android apps via Capacitor.
 
-## License
+## Quick start
 
-The project code is licensed under the Apache License, Version 2.0. See [LICENSE](./LICENSE) for the license text. The case reports and logbook summaries use project-authored layouts covered by this license. The optional report-form printing feature is disabled by default and does not ship any FUSIC®/Intensive Care Society (ICS) artwork; see [`docs/ICS_FORMS.md`](./docs/ICS_FORMS.md). Production dependency notices are included in [`public/THIRD_PARTY_NOTICES.txt`](./public/THIRD_PARTY_NOTICES.txt), and the Apache-2.0 license is copied to `public/PROJECT_LICENSE.txt` for app distributions. Regenerate both with `npm run licenses:notices`. Public asset sources and rights status are tracked in [`ASSET_CREDITS.md`](./ASSET_CREDITS.md).
-
-Curriculum names, requirements, and linked training-pack documents are reference material published by the Intensive Care Society (ICS). They remain subject to their respective rights and terms; this repository does not grant permission to redistribute ICS documents. The app links to source documents and summarizes selected logbook requirements for informational purposes. See [ROADMAP.md](./ROADMAP.md) and [`src/curricula/fusic/`](./src/curricula/fusic/) for source references.
-
-See [ROADMAP.md](./ROADMAP.md) for the planned product scope, curriculum research, and milestones.
-
-Contributors: see [CONTRIBUTING.md](./CONTRIBUTING.md) for setup and pull request guidance. Report vulnerabilities privately using the process in [SECURITY.md](./SECURITY.md). Use the GitHub issue forms for bug reports and feature requests; do not include patient data or logbook exports.
-
-## Requirements
-
-- Node.js 20 or newer
-- npm
-
-## Run the web app
+Requirements: Node.js 20 or newer and npm.
 
 ```sh
 npm install
 npm run dev
 ```
 
+## User guide
+
+Full end-user documentation lives in [`docs/`](./docs/):
+
+- [`docs/USER_GUIDE.md`](./docs/USER_GUIDE.md) — pages, metrics, structured
+  entry, PDFs, CSV export, and sample data.
+- [`docs/BACKUP_AND_PRIVACY.md`](./docs/BACKUP_AND_PRIVACY.md) — local storage,
+  encrypted backups, Google Drive setup, and patient-data safety.
+- [`docs/ICS_FORMS.md`](./docs/ICS_FORMS.md) — the optional report-form printing
+  feature: ICS permission, conditions, and template setup.
+
 ## Find your way around the code
 
-- [`src/App.tsx`](./src/App.tsx) connects the main screens and coordinates app state.
-- [`src/components/`](./src/components) contains the interface pieces, including case entry, case review, and the case list.
-- [`src/hooks/`](./src/hooks) contains app behavior that is reused or easier to understand separately, such as loading local data, searching cases, backups, and printing.
-- [`src/services/`](./src/services) contains application workflows that coordinate storage and domain rules. The backup service prepares, encrypts, validates, and restores portable backups before any remote transfer.
-- [`src/domain/`](./src/domain) contains case types and rules, backup validation, metrics, and print formatting. These files should not depend on the React interface or browser storage.
-- [`src/config/features.ts`](./src/config/features.ts) defines build-time feature flags, including `ENABLE_ICS_FORMS` for the optional report-form printing feature (disabled by default).
-- [`src/cloud/`](./src/cloud) contains remote transport adapters. Backup providers receive and return opaque encrypted payloads; authentication and provider-specific API details stay in the adapter.
-- [`src/domain/pathway-requirements.ts`](./src/domain/pathway-requirements.ts) is the versioned curriculum catalogue. It records sources, scan targets, supervision, case mix, scan-type quotas, and collection windows; current app support includes Heart, Lung, Abdomen, DVT, HD, and Vascular.
-- [`src/storage/`](./src/storage) reads and writes the on-device IndexedDB database and handles upgrades to saved data.
-- [`src/theme.css`](./src/theme.css) contains the shared palette and semantic color tokens used across pages and pathways. Change these values to recolor the interface consistently.
-- [`src/styles.css`](./src/styles.css) contains the app layout, component styles, and responsive rules.
+- [`src/App.tsx`](./src/App.tsx) connects the main screens and coordinates app
+  state.
+- [`src/pathways/`](./src/pathways) owns per-modality behavior: form fields,
+  review details, case summaries, metrics breakdowns, CSV columns, and print
+  layouts for Heart, Lung, Abdomen, DVT, HD, and Vascular. Start here when adding
+  or changing a scan type.
+- [`src/curricula/fusic/`](./src/curricula/fusic) holds versioned curriculum
+  profiles (targets, supervision, quotas, sources) with a static registry;
+  [`src/domain/pathway-requirements.ts`](./src/domain/pathway-requirements.ts)
+  is the catalogue they are checked against.
+- [`src/domain/`](./src/domain) contains shared case types and rules, backup
+  validation, metrics aggregation, and print formatting. These files should not
+  depend on the React interface or browser storage.
+- [`src/storage/`](./src/storage) reads and writes the on-device IndexedDB
+  database and handles upgrades to saved data.
+- [`src/services/`](./src/services) contains application workflows that
+  coordinate storage and domain rules. The backup service prepares, encrypts,
+  validates, and restores portable backups before any remote transfer.
+- [`src/cloud/`](./src/cloud) contains remote transport adapters. Backup
+  providers receive and return opaque encrypted payloads; authentication and
+  provider-specific API details stay in the adapter.
+- [`src/hooks/`](./src/hooks) contains app behavior that is reused or easier to
+  understand separately, such as loading local data, searching cases, backups,
+  and printing.
+- [`src/components/`](./src/components) contains the interface pieces, including
+  case entry, case review, and the case list.
+- [`src/config/features.ts`](./src/config/features.ts) defines build-time
+  feature flags, including `ENABLE_ICS_FORMS` for the optional report-form
+  printing feature (on by default; set `VITE_ENABLE_ICS_FORMS=false` to hide
+  the ICS form actions).
+- [`src/theme.css`](./src/theme.css) contains the shared palette and semantic
+  color tokens; [`src/styles.css`](./src/styles.css) contains the layout,
+  component styles, and responsive rules.
 
-For a small first change, start with a label or layout in a component. If a change affects what a case means or how it is stored, check the domain model and backup validation as well. Database changes need an upgrade path so existing logbooks continue to open.
+For a small first change, start with a label or layout in a component. If a
+change affects what a case means or how it is stored, check the domain model and
+backup validation as well. Database changes need an upgrade path so existing
+logbooks continue to open. [`CONTRIBUTING.md`](./CONTRIBUTING.md) has setup,
+pull request guidance, and checklists for adding a pathway or curriculum profile.
 
 ## Build and check
 
@@ -53,53 +84,36 @@ npm run build
 npm run preview
 ```
 
-The production web app is written to `dist/`. The PWA service worker caches the built app shell for offline use.
+The production web app is written to `dist/`. The PWA service worker caches the
+built app shell for offline use.
 
 ## Deploy a GitHub Pages test
 
-The **Build and deploy Vite site to GitHub Pages** GitHub Actions workflow runs `npm run check` and publishes the production app when changes are pushed to `main` (or when the workflow is run manually). To enable it:
+The **Build and deploy Vite site to GitHub Pages** GitHub Actions workflow runs
+`npm run check` and publishes the production app when changes are pushed to
+`main` (or when the workflow is run manually). To enable it:
 
-1. Push this project to a GitHub repository. If its default branch is not `main`, update the branch filter in `.github/workflows/deploy-vite-pages.yml`.
-2. In the repository's **Settings → Pages**, choose **GitHub Actions** as the build and deployment source.
-3. Push to `main` or manually run **Build and deploy Vite site to GitHub Pages** from the Actions tab. This workflow explicitly builds the Vite app and deploys `dist/`; do not run the separate `pages-build-deployment` workflow generated by GitHub.
+1. Push this project to a GitHub repository. If its default branch is not `main`,
+   update the branch filter in `.github/workflows/deploy-vite-pages.yml`.
+2. In the repository's **Settings → Pages**, choose **GitHub Actions** as the
+   build and deployment source.
+3. Push to `main` or manually run **Build and deploy Vite site to GitHub Pages**
+   from the Actions tab. This workflow explicitly builds the Vite app and
+   deploys `dist/`; do not run the separate `pages-build-deployment` workflow
+   generated by GitHub.
 
-The build automatically uses the correct base path for project pages and user/organization pages. For other static hosts, run `npm run check` and publish `dist/` over HTTPS.
+The build automatically uses the correct base path for project pages and
+user/organization pages. For other static hosts, run `npm run check` and publish
+`dist/` over HTTPS.
 
-GitHub Pages can make the app itself publicly reachable; site access controls depend on the GitHub plan and repository settings. The app does not sync live case data. If a user configures Google Drive and uploads a backup, it contains only an encrypted copy of their logbook. Use only non-identifying test data on a hosted deployment. Generated backup files are excluded by `.gitignore`; keep them out of source control.
-
-Browser storage is isolated by site origin. Cases saved at `localhost` will not appear automatically at the hosted address (or on another device). Before moving test data, download a backup from the current site and restore it on the destination site. Keep a separate copy of the backup; deleting browser site data or removing the app can permanently remove local cases.
-
-## Logbook data
-
-Lung, Heart, Abdomen, DVT, HD, and Vascular cases are stored locally in this browser's IndexedDB; they are not continuously uploaded or synced. A user can explicitly upload an encrypted backup to Google Drive from Settings. Training targets can be hidden independently for each pathway without changing its saved cases.
-
-Choose one pathway at a time from the **Logbook type** selector. The app has **Overview**, **Cases**, **Metrics**, and **Settings** pages for pathway progress, case history, descriptive case patterns, and local preferences. Create or edit a case on its own screen; saving returns to the Cases page. Logbook print, CSV, backup, and restore controls are in Settings; individual case PDFs are available from Cases.
-
-Metrics summarize case activity over a rolling 12-month period or the current calendar year, along with recorded regions/views, findings marked Yes, image quality, impression categories, and management-impact markers. Metrics describe only the data entered and do not assess competence. In development builds, **Preview sample data** displays generated cases in memory to help evaluate the metrics. Development builds also show **Admin test data** controls on Overview. On the hosted PWA, add `?admin=1` to the site address to reveal those controls. This query is only a convenience gate, not authentication. Admin controls can add a complete synthetic case set for one pathway or download an importable full sample backup for all six supported pathways. The backup contains 195 cases with structured fields filled and sample IDs, findings, and notes clearly marked as synthetic. Restore it through **Settings → Restore / merge backup**. Populated synthetic cases are stored on this device, included in backups, and can be removed without deleting real cases. Repeating population does not duplicate existing sample records.
-
-Use **Export encrypted backup** in Settings to save a versioned copy of all cases and pathway training modes. Choose and confirm a passphrase of at least 14 characters. The app encrypts the backup on this device using PBKDF2-HMAC-SHA-256 and AES-256-GCM before downloading or opening the native share sheet. The passphrase is never stored by the app; losing it means the backup cannot be decrypted. Keep the passphrase separately from the backup file. Use **Restore / merge backup** to merge a copy into this device: new case IDs are added, existing IDs and local preferences are kept, and repeated restores do not duplicate cases. Encrypted and older plaintext JSON backups are validated before saving; plaintext payloads are limited to 10 MB and encrypted files to 15 MB. Restore does not replace or delete existing cases. The app cannot confirm that a downloaded or shared file was saved at its destination.
-
-Google Drive backup in the web app is optional and is enabled at build time by setting `VITE_GOOGLE_CLIENT_ID` to a Google OAuth web client ID. For GitHub Pages, add it as a repository Actions variable named `VITE_GOOGLE_CLIENT_ID`; it is a public client ID, not a secret. In Google Cloud, enable the Drive API and register each deployed app origin as an authorized JavaScript origin. The user grants only the `drive.appdata` scope. Uploads are encrypted on-device first and stored as dated files in Drive's hidden app-specific folder; the app never stores the passphrase. Restore downloads the newest dated backup and uses the same merge behavior as local restore. Because the app has no backend, Google Identity Services' browser token flow is used: access tokens stay in memory and expire, so Google may ask the user to authorize again after reload or expiry. This static flow does not use PKCE; Google's authorization code flow with PKCE requires a backend token exchange. Google backup is disabled in Capacitor native builds until a system-browser OAuth flow is implemented. The hidden app folder is tied to this OAuth application and is deleted if the user removes the app from Google Drive, so keep a separate backup copy. Changing the OAuth client ID can make previous app-folder backups unavailable. Revoke access from the user's Google Account security settings when disconnecting.
-
-Use **Export CSV** to export the currently selected pathway for spreadsheet review. Web browsers download the file; native iOS and Android builds open the system share sheet. The export uses stable column names and pathway-specific findings, numbers cases by scan date, and omits internal IDs and timestamps. CSV quoting and spreadsheet-formula safeguards are applied. Free-text fields such as indication, diagnosis, summary, and reflection may still contain information you entered, so review them and remove patient-identifying details before sharing the file.
-
-Encrypted backups conceal their contents from someone who only obtains the backup file, but they do not encrypt the app's local IndexedDB, CSV exports, or PDF reports. Google Drive stores only the encrypted backup, but provider infrastructure still processes connection metadata such as the account used, IP address, and upload timing. Clearing browser site data or removing the app can still remove locally stored cases, so keep an encrypted backup separately. Do not enter patient names, dates of birth, record numbers, or other identifying information. The case form warns about common patterns such as email addresses, phone numbers, labelled record numbers, and labelled dates of birth; it cannot reliably detect names or unlabelled identifiers. Review notes yourself and remove any patient-identifying details before saving. This is a personal training and reflection log, not a clinical record.
-
-Cases can optionally be tagged with a normal, abnormal/pathology, or indeterminate impression and whether the scan changed management. These are personal review markers, not clinical advice or accreditation claims. Training mode shows total and directly supervised counts; with training targets hidden, the summary focuses on abnormal impressions and changed management.
-
-Lung structured entry is organised by finding, with Yes and No choices and a single-line Not assessed checkbox for each region. New and untouched findings start as Not assessed; selecting Yes or No clears that checkbox. Existing Unable to assess (U/A) values remain supported in saved records. Case review and the printout continue to show results grouped by region.
-
-Heart assessment findings use one-tap Yes, No, and Not assessed buttons. Existing Unable to assess values are presented as Not assessed in the form and remain supported in saved records.
-
-Each case can be opened as a print-ready, single-page A4 report with **PDF** from the Cases list. This is a project-authored report layout covered by Apache-2.0. An optional report-form printing feature can prefill a printed report-form layout from case data, but it is disabled by default and ships no third-party artwork in this repository. To enable it, copy your own templates into the git-ignored `public/templates/` folder and turn on the flag; see [`docs/ICS_FORMS.md`](./docs/ICS_FORMS.md) for the full path and the [`ROADMAP.md`](./ROADMAP.md#path-to-re-enable-report-form-printing) checklist. The in-app PDF preview can print the report or download a PDF directly; native iOS and Android builds offer the system share sheet to save it to Files or another destination. The preview has a close control that returns to the logbook.
-
-Abdomen, Heart, and Lung cases can store optional age, gender, and BMI for review and report forms. Do not enter patient names, dates of birth, or record numbers.
-
-From **Overview**, choose **Print logbook / PDF** for the selected pathway to create a multi-page training logbook. This is a SonoCrit-authored layout covered by Apache-2.0. Its table uses these fields: study number, date, diagnosis, summary of main findings, and supervisor. It includes blank numbered rows up to the pathway reference and continues onto extra pages when there are more cases. The in-app PDF preview can print or download the report and provides a close control to return to Overview. This is a personal report using the fields recorded in the app, not an official FUSIC form or assessment document.
+A hosted deployment makes the app publicly reachable, and browser storage is
+isolated per site origin. Before hosting with real data, read
+[`docs/BACKUP_AND_PRIVACY.md`](./docs/BACKUP_AND_PRIVACY.md).
 
 ## Capacitor
 
-The Capacitor configuration points to the local `dist/` directory. Build the web app before syncing native projects:
+The Capacitor configuration points to the local `dist/` directory. Build the web
+app before syncing native projects:
 
 ```sh
 npm run build
@@ -113,4 +127,47 @@ npm run cap:add:ios
 npm run cap:add:android
 ```
 
-Native projects embed the built web assets. Do not add a remote `server.url` to the Capacitor configuration; the packaged app must not depend on downloading a hosted PWA at launch.
+Native projects embed the built web assets. Do not add a remote `server.url` to
+the Capacitor configuration; the packaged app must not depend on downloading a
+hosted PWA at launch.
+
+## Roadmap and contributing
+
+See [ROADMAP.md](./ROADMAP.md) for the planned product scope, curriculum
+research, and milestones. Contributors: see [CONTRIBUTING.md](./CONTRIBUTING.md)
+for setup and pull request guidance. Report vulnerabilities privately using the
+process in [SECURITY.md](./SECURITY.md). Use the GitHub issue forms for bug
+reports and feature requests; do not include patient data or logbook exports.
+
+## License
+
+The project code is licensed under the Apache License, Version 2.0. See
+[LICENSE](./LICENSE) for the license text. The case reports and logbook
+summaries use project-authored layouts covered by this license. The optional
+report-form printing feature reproduces FUSIC®/Intensive Care Society (ICS)
+report-form layouts with the ICS's written permission (October 2026); see
+[`docs/ICS_FORMS.md`](./docs/ICS_FORMS.md). Production dependency notices are
+included in [`public/THIRD_PARTY_NOTICES.txt`](./public/THIRD_PARTY_NOTICES.txt),
+and the Apache-2.0 license is copied to `public/PROJECT_LICENSE.txt` for app
+distributions. Regenerate both with `npm run licenses:notices`. Public asset
+sources and rights status are tracked in [`ASSET_CREDITS.md`](./ASSET_CREDITS.md).
+
+Curriculum names, requirements, and linked training-pack documents are reference
+material published by the Intensive Care Society (ICS). They remain subject to
+their respective rights and terms; this repository does not grant permission to
+redistribute ICS documents. The app links to source documents and summarizes
+selected logbook requirements for informational purposes. See
+[ROADMAP.md](./ROADMAP.md) and [`src/curricula/fusic/`](./src/curricula/fusic/)
+for source references.
+
+CritSono is an independent, community-driven project. It is **not affiliated
+with, endorsed by, or connected to the Intensive Care Society (ICS) or the
+FUSIC® programme**. CritSono **supports the FUSIC® accreditation process rather
+than replacing it**: competency sign-off and module recognition remain part of
+the formal FUSIC®/ICS process, verified through the FUSIC learning portal.
+FUSIC was selected as the reference curriculum because, at
+the time of writing, no open-source logbook aligned with it; the curriculum
+facts summarised in this repository are reproduced for informational purposes
+only. Beyond the curriculum references described above, CritSono is not
+affiliated with, sponsored by, endorsed by, or connected to any other
+organisation, course, training programme, or commercial service.

@@ -101,7 +101,7 @@ function createHeartFormSheet(entry: HeartCaseFields) {
 export function createHeartIcsFormPrintDocument(entry: HeartCaseFields) {
   return createFusicFormPrintDocument({
     title: `Heart case report form · ${entry.date}`,
-    previewNote: "Prefilled from this SonoCrit case record using the FUSIC® Heart report-form template from the Intensive Care Society (ICS) Assessment Pack, v13 (2025). Demographics appear when recorded; signatures, mentor feedback, and unsupported ventilation choices remain blank for completion by hand.",
+    previewNote: "Prefilled from this CritSono case record using the FUSIC® Heart report-form template from the Intensive Care Society (ICS) Assessment Pack, v13 (2025). This form supports, and does not replace, formal FUSIC® accreditation: competency sign-off and module recognition remain part of the formal FUSIC®/ICS process, verified through the FUSIC learning portal. Demographics appear when recorded; signatures, mentor feedback, and unsupported ventilation choices remain blank for completion by hand.",
     sheet: createHeartFormSheet(entry),
   });
 }
@@ -120,7 +120,7 @@ export function createHeartIcsFormsPrintDocument(
   }));
   return createFusicFormCollectionPrintDocument({
     title: "ICS Heart logbook report forms",
-    previewNote: `One FUSIC® Heart report form per saved Heart case (${entries.length} cases), based on the Intensive Care Society (ICS) Assessment Pack, v13 (2025). Demographics appear when recorded; signatures and mentor feedback remain blank for completion by hand.`,
+    previewNote: `One FUSIC® Heart report form per saved Heart case (${entries.length} cases), based on the Intensive Care Society (ICS) Assessment Pack, v13 (2025). These forms support, and do not replace, formal FUSIC® accreditation: competency sign-off and module recognition remain part of the formal FUSIC®/ICS process, verified through the FUSIC learning portal. Demographics appear when recorded; signatures and mentor feedback remain blank for completion by hand.`,
     sheets,
   });
 }

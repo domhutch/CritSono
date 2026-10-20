@@ -2,6 +2,13 @@
 
 Review date: 17 October 2026
 
+> **Update (20 October 2026):** the two external-confirmation items in the table
+> below are resolved. The ICS confirmed in writing that reproducing the
+> report-form content in a third-party app is not an issue, provided the app is
+> clear that it supports rather than replaces FUSIC® accreditation (logo
+> artwork included); the portrait photograph and icon are the maintainer's own
+> work under the project license. See [`ASSET_CREDITS.md`](./ASSET_CREDITS.md).
+
 This is a practical repository review, not legal advice or a complete compliance audit. Dependency counts below are based on the checked-in `package-lock.json` license metadata. Recheck package contents, asset provenance, and redistribution terms before publishing a release.
 
 ## Current assessment
@@ -26,7 +33,7 @@ The main contributor friction is concentrated in shared files: `src/App.tsx` is 
 
 ## Important licensing boundary
 
-SonoCrit’s normal case and logbook print layouts are project-authored and covered by Apache-2.0. The separate Heart and Lung ICS form exports use FUSIC®/Intensive Care Society report-form templates; their source forms and branding are attributed in `ASSET_CREDITS.md` and remain under their own rights. `Source Material/` and `curriculum/` are ignored by Git, but ignore rules do not prevent other copied or derived assets from being committed. The portrait illustration still lacks a recorded source and license. The package-license inventory does not establish rights for curriculum content or any non-package asset.
+CritSono’s normal case and logbook print layouts are project-authored and covered by Apache-2.0. The separate Heart and Lung ICS form exports use FUSIC®/Intensive Care Society report-form templates; their source forms and branding are attributed in `ASSET_CREDITS.md` and remain under their own rights. `Source Material/` and `curriculum/` are ignored by Git, but ignore rules do not prevent other copied or derived assets from being committed. The portrait illustration still lacks a recorded source and license. The package-license inventory does not establish rights for curriculum content or any non-package asset.
 
 ## Modularity boundaries
 

@@ -109,7 +109,7 @@ export function useLogbookBackup({
       const delivery = await deliverExport(
         file,
         "pocus-logbook-backup-full-admin-sample.json",
-        "Full SonoCrit: POCUS Logbook sample backup",
+        "Full CritSono: POCUS Logbook sample backup",
       );
       return delivery;
     } finally {
@@ -127,7 +127,7 @@ export function useLogbookBackup({
         type: "application/json",
       });
       const filename = `pocus-logbook-backup-${backup.exportedAt.replace(/[:.]/g, "-")}.pocusbackup`;
-      const delivery = await deliverExport(file, filename, "Encrypted SonoCrit: POCUS Logbook backup");
+      const delivery = await deliverExport(file, filename, "Encrypted CritSono: POCUS Logbook backup");
       setStatus(delivery === "shared"
         ? `Encrypted backup prepared for sharing with ${backup.caseCount} ${backup.caseCount === 1 ? "case" : "cases"}. Choose a destination; the app cannot confirm that it was saved.`
         : `Encrypted backup download started with ${backup.caseCount} ${backup.caseCount === 1 ? "case" : "cases"}. Keep your passphrase safe; it cannot be recovered.`);

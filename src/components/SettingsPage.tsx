@@ -293,7 +293,7 @@ function SettingsPage({
             className="sr-only"
             type="file"
             accept=".pocusbackup,.json,application/json"
-            aria-label="Choose an encrypted SonoCrit: POCUS Logbook backup file"
+            aria-label="Choose an encrypted CritSono: POCUS Logbook backup file"
             onChange={(event) => void onRestoreBackup(event, backupPassphrase).finally(() => {
               setBackupPassphrase("");
               setConfirmPassphrase("");

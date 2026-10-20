@@ -1,8 +1,8 @@
 # ICS / FUSIC report-form printing
 
-This document explains how the **report-form printing** feature works, why it is
-disabled in this repository by default, and how to enable it with your own form
-templates.
+This document explains how the **report-form printing** feature works, the ICS
+permission it operates under and the conditions that come with it, and how the
+templates and feature flag are configured.
 
 ## What the feature does
 
@@ -26,24 +26,32 @@ Relevant source files:
   `printAbdomenIcsForm`, and their bulk variants.
 - `src/config/features.ts` — the `ENABLE_ICS_FORMS` flag.
 
-## Why it is disabled
+## Permission and conditions
 
-The feature is designed around the official **FUSIC® / Intensive Care Society
-(ICS)** report-form templates. Those templates reproduce ICS form layouts and the
-FUSIC® logo. The ICS holds the rights to that artwork, and this repository does
-**not** grant or assume permission to redistribute it.
+In October 2026 the **Intensive Care Society (ICS)**, after discussion with the
+FUSIC® team, confirmed in writing that there is no issue with reproducing the
+content of the logbook forms within a third-party application. The permission
+email is retained privately by the maintainer; the recorded summary lives in
+[`ASSET_CREDITS.md`](../ASSET_CREDITS.md).
 
-To keep the source repository open-sourceable, the official templates are **not**
-included, and the feature is turned **off** by default. No ICS artwork is
-distributed here.
+The conditions attached to that permission:
 
-## Enabling the feature
+- **CritSono supports the FUSIC® accreditation process — it does not replace
+  it.** FUSIC® accreditation, competency sign-off, and recognition of module
+  completion remain part of the formal FUSIC®/ICS process, and competency can
+  only be signed off through the established FUSIC® pathway and verified through
+  the FUSIC learning portal.
+- The app's generated ICS form documents state this support-not-replace
+  relationship on the printed output itself.
 
-### 1. Put the templates in place
+The confirmation addresses the content of the forms. **Logo scope: resolved.**
+The example form the maintainer sent to the ICS included the FUSIC® logo
+artwork, and their no-concern confirmation covers it; the templates ship as
+they appear, logo included.
 
-Create `public/templates/` and copy your report-form templates in. Use these
-filenames, which the builders expect (or update the filenames in the three
-`*-ics-form.ts` files to match whatever you use):
+## Templates
+
+The four templates live in `public/templates/`:
 
 | File | Used by |
 | --- | --- |
@@ -52,57 +60,33 @@ filenames, which the builders expect (or update the filenames in the three
 | `public/templates/fusic-abdomen-report-form-v1-2025.svg` | Abdomen (page 1) |
 | `public/templates/fusic-abdomen-report-form-v1-2025-page2.svg` | Abdomen (page 2) |
 
-Each template must be an A4-portrait SVG. The overlay assumes the coordinate
-space used by the original templates: a `viewBox` of `0 0 1192 1684`. If your
-template uses different dimensions, update the `viewBox` in
-`createFusicFormSheet()` (`src/domain/fusic-forms.ts`) and the field coordinates
-in the `*-ics-form.ts` builders to match.
+Each template must be an A4-portrait SVG. The overlay is drawn in its own
+`0 0 1192 1684` coordinate space and stretched to fill the A4 sheet alongside
+the background image, so any A4-aspect template works; the field coordinates in
+the `*-ics-form.ts` builders are calibrated to the official ICS layouts.
 
-`public/templates/` is **git-ignored**, so the artwork stays on your machine and
-is never committed to the repository. Copy the files in directly; there is no
-download step.
+Run `npm run optimize:forms` after changing templates to apply the shared SVGO
+config.
 
-**You are responsible for ensuring you have the right to use any template you
-add.** Keep the official source PDFs out of the repository unless you have
-permission that explicitly allows redistribution.
+Forks and third parties: the recorded ICS permission covers this project. If you
+fork CritSono and redistribute it, confirm your own position with the ICS, or
+replace the templates with your own A4-portrait layouts and keep the feature
+enabled only with your own artwork.
 
-### 2. Turn the flag on
+## Feature flag
 
-`ENABLE_ICS_FORMS` is read at build time from `VITE_ENABLE_ICS_FORMS`. For local
-development, create a `.env.local` file (also git-ignored) with:
-
-```sh
-VITE_ENABLE_ICS_FORMS=true
-```
-
-Or set it for a single build:
+`ENABLE_ICS_FORMS` is read at build time from `VITE_ENABLE_ICS_FORMS` and is **on
+by default**. To hide the ICS form actions, set the variable to anything other
+than `true` at build time — for example in `.env.local` (git-ignored):
 
 ```sh
-VITE_ENABLE_ICS_FORMS=true npm run build
+VITE_ENABLE_ICS_FORMS=false
 ```
 
-For GitHub Pages, add a repository **Actions variable** named
-`VITE_ENABLE_ICS_FORMS` with the value `true`, and pass it in the deploy
-workflow's build step (mirroring the existing `VITE_GOOGLE_CLIENT_ID` wiring).
-Note that a hosted deployment also needs the template files at build time, so
-supply them from a private source or build artifact you control.
+Rebuild after changing the flag; values are baked into the bundle at build time.
 
-### 3. Verify
+## Verify
 
 Run `npm run check`, then use the **ICS form** action on a Heart, Lung, or
 Abdomen case (or the bulk downloads in Settings) and confirm the printed output
-aligns with your template.
-
-## Disabling again
-
-Unset `VITE_ENABLE_ICS_FORMS` (or set it to anything other than `true`) — for
-example by deleting the line from `.env.local`. The builders and templates can
-stay in place; only the UI actions are hidden. Removing `public/templates/` also
-works.
-
-## Restoring the official templates
-
-The official templates are not distributed with this repository. If you are the
-rights holder or hold written permission, copy them into `public/templates/` from
-your own private copy. Confirm your permission covers redistribution before
-publishing a build that includes them.
+aligns with the template and carries the support-not-replace note.
