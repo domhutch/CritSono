@@ -95,7 +95,7 @@ function createLungFormSheet(entry: LungCaseFields, operatorName = "") {
 export function createLungIcsFormPrintDocument(entry: LungCaseFields, operatorName = "") {
   return createFusicFormPrintDocument({
     title: `Lung case report form · ${entry.date}`,
-    previewNote: "Prefilled from this CritSono Lung case using the FUSIC® Lung report-form template from the Intensive Care Society (ICS) Assessment Pack, v10 (2025). Demographics and operator appear when recorded; unsupported findings and unrecorded fields remain blank for completion by hand.",
+    previewNote: "Prefilled from this SonoCrit Lung case using the FUSIC® Lung report-form template from the Intensive Care Society (ICS) Assessment Pack, v10 (2025). Demographics and operator appear when recorded; unsupported findings and unrecorded fields remain blank for completion by hand.",
     sheet: createLungFormSheet(entry, operatorName),
   });
 }

@@ -104,7 +104,7 @@ export function createCasePrintDocument(entry: LogbookCase, defaultOperatorName 
   <div class="toolbar"><button class="print-button" onclick="window.print()">Print / save PDF</button></div>
   <main class="sheet">
     <header class="sheet-header">
-      <div><p class="brand">CritSono: POCUS Logbook · Personal case record</p><h1>${escapeHtml(PATHWAYS[entry.pathway].label)} logbook report</h1><p class="subtitle">Training and reflection record · Not a clinical record or accreditation decision</p></div>
+      <div><p class="brand">SonoCrit: POCUS Logbook · Personal case record</p><h1>${escapeHtml(PATHWAYS[entry.pathway].label)} logbook report</h1><p class="subtitle">Training and reflection record · Not a clinical record or accreditation decision</p></div>
       <span class="badge">${escapeHtml(formatUkDate(entry.date))}</span>
     </header>
     <section class="section"><h2>Case details</h2><div class="field-grid">
@@ -159,7 +159,7 @@ export function createFullLogbookPrintDocument(cases: LogbookCase[], operatorNam
     .slice()
     .sort((a, b) => a.date.localeCompare(b.date) || a.pathway.localeCompare(b.pathway) || a.createdAt.localeCompare(b.createdAt))
     .map((entry) => createCasePrintDocument(entry, operatorName));
-  return combineCaseReports(reports, "Full CritSono logbook");
+  return combineCaseReports(reports, "Full SonoCrit logbook");
 }
 
 function combineCaseReports(reports: string[], title: string) {

@@ -179,7 +179,7 @@ export async function uploadEncryptedBackupToDrive(token: string, encrypted: Enc
 export async function downloadLatestBackupFromDrive(token: string) {
   const backups = await listBackups(token);
   const latest = backups[0];
-  if (!latest) throw new Error("No CritSono: POCUS Logbook backups were found in this Google Drive app folder.");
+  if (!latest) throw new Error("No SonoCrit: POCUS Logbook backups were found in this Google Drive app folder.");
 
   const response = await fetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(latest.id)}?alt=media`, {
     headers: { Authorization: `Bearer ${token}` },
@@ -208,7 +208,7 @@ export const googleDriveBackupProvider: EncryptedBackupProvider<string> = {
   async downloadLatest(token) {
     const downloaded = await downloadLatestBackupFromDrive(token);
     if (!isEncryptedBackupFile(downloaded.encrypted)) {
-      throw new Error("The latest Google Drive file is not an encrypted CritSono: POCUS Logbook backup.");
+      throw new Error("The latest Google Drive file is not an encrypted SonoCrit: POCUS Logbook backup.");
     }
     return {
       payload: downloaded.encrypted,

@@ -129,7 +129,7 @@ function createAbdomenFormSheets(entry: AbdomenCaseFields, operatorName: string)
 export function createAbdomenIcsFormPrintDocument(entry: AbdomenCaseFields, operatorName = "") {
   return createFusicFormCollectionPrintDocument({
     title: `Abdomen case report form · ${entry.date}`,
-    previewNote: "Prefilled from this CritSono Abdomen case using the two-page ICS Abdomen report-form layout (Assessment Pack 2025 v1). Demographics and operator appear when recorded; signatures and trainer feedback remain blank for completion by hand.",
+    previewNote: "Prefilled from this SonoCrit Abdomen case using the two-page ICS Abdomen report-form layout (Assessment Pack 2025 v1). Demographics and operator appear when recorded; signatures and trainer feedback remain blank for completion by hand.",
     sheets: createAbdomenFormSheets(entry, operatorName),
   });
 }

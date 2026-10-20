@@ -46,7 +46,7 @@ function AboutHelpPage({ onBack }: AboutHelpPageProps) {
         Back to Settings
       </button>
       <header className="about-help-heading">
-        <p className="eyebrow">CritSono: POCUS Logbook</p>
+        <p className="eyebrow">SonoCrit: POCUS Logbook</p>
         <h2 id="about-help-heading">About &amp; Help</h2>
         <p>A quick guide to recording, reviewing, and keeping your logbook safe.</p>
       </header>
@@ -77,7 +77,7 @@ function AboutHelpPage({ onBack }: AboutHelpPageProps) {
 
       <section className="settings-panel" aria-labelledby="licenses-heading">
         <h3 id="licenses-heading">Open-source licenses</h3>
-        <p>CritSono is licensed under Apache-2.0. Production dependency notices are included with this app.</p>
+        <p>SonoCrit is licensed under Apache-2.0. Production dependency notices are included with this app.</p>
         <p className="about-help-note">
           <a href={`${import.meta.env.BASE_URL}PROJECT_LICENSE.txt`}>Project license</a>
           {" · "}

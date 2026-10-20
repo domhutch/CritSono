@@ -1,4 +1,4 @@
-# CritSono: POCUS Logbook
+# SonoCrit: POCUS Logbook
 
 A feature rich, open source and modifiable logbook for Point of Care Ultrasound Logging in Critical Care environments.
 Offline local storage in your browsers indexedDB with the option for encrypted/unencrypted backup.
@@ -95,7 +95,7 @@ Each case can be opened as a print-ready, single-page A4 report with **PDF** fro
 
 Abdomen, Heart, and Lung cases can store optional age, gender, and BMI for review and report forms. Do not enter patient names, dates of birth, or record numbers.
 
-From **Overview**, choose **Print logbook / PDF** for the selected pathway to create a multi-page training logbook. This is a CritSono-authored layout covered by Apache-2.0. Its table uses these fields: study number, date, diagnosis, summary of main findings, and supervisor. It includes blank numbered rows up to the pathway reference and continues onto extra pages when there are more cases. The in-app PDF preview can print or download the report and provides a close control to return to Overview. This is a personal report using the fields recorded in the app, not an official FUSIC form or assessment document.
+From **Overview**, choose **Print logbook / PDF** for the selected pathway to create a multi-page training logbook. This is a SonoCrit-authored layout covered by Apache-2.0. Its table uses these fields: study number, date, diagnosis, summary of main findings, and supervisor. It includes blank numbered rows up to the pathway reference and continues onto extra pages when there are more cases. The in-app PDF preview can print or download the report and provides a close control to return to Overview. This is a personal report using the fields recorded in the app, not an official FUSIC form or assessment document.
 
 ## Capacitor
 

@@ -84,7 +84,7 @@ export function createLogbookPrintDocument(
     return `<section class="logbook-page">
       <header class="page-heading">
         <div>
-          <p class="brand">CritSono: POCUS Logbook · Personal training record</p>
+          <p class="brand">SonoCrit: POCUS Logbook · Personal training record</p>
           <h1>${escapeHtml(pathwayLabel)} logbook</h1>
           <p class="subtitle">Training logbook · Independent personal copy · Not an official FUSIC form${operatorLabel}</p>
         </div>

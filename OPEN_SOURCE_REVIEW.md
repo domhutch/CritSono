@@ -26,7 +26,7 @@ The main contributor friction is concentrated in shared files: `src/App.tsx` is 
 
 ## Important licensing boundary
 
-CritSono’s normal case and logbook print layouts are project-authored and covered by Apache-2.0. The separate Heart and Lung ICS form exports use FUSIC®/Intensive Care Society report-form templates; their source forms and branding are attributed in `ASSET_CREDITS.md` and remain under their own rights. `Source Material/` and `curriculum/` are ignored by Git, but ignore rules do not prevent other copied or derived assets from being committed. The portrait illustration still lacks a recorded source and license. The package-license inventory does not establish rights for curriculum content or any non-package asset.
+SonoCrit’s normal case and logbook print layouts are project-authored and covered by Apache-2.0. The separate Heart and Lung ICS form exports use FUSIC®/Intensive Care Society report-form templates; their source forms and branding are attributed in `ASSET_CREDITS.md` and remain under their own rights. `Source Material/` and `curriculum/` are ignored by Git, but ignore rules do not prevent other copied or derived assets from being committed. The portrait illustration still lacks a recorded source and license. The package-license inventory does not establish rights for curriculum content or any non-package asset.
 
 ## Modularity boundaries
 

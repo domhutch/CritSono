@@ -221,7 +221,7 @@ export function useCasePrinting(setError: (message: string | null) => void) {
     try {
       printDocument(
         createFullLogbookPrintDocument(cases, operatorName),
-        `critsono-full-logbook-${new Date().toISOString().slice(0, 10)}.pdf`,
+        `sonocrit-full-logbook-${new Date().toISOString().slice(0, 10)}.pdf`,
         ".report-collection",
       );
     } catch (cause) {
