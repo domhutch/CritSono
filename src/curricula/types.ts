@@ -17,6 +17,7 @@ export interface RequirementSource {
 
 export interface ScanTypeQuota {
   scanType: string;
+  caseCategory?: string;
   minimumScans: number;
   minimumDirectlySupervised: number;
   note?: string;

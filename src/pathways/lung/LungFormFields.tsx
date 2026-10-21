@@ -1,3 +1,4 @@
+import { ASSESSMENT_OPTIONS } from "../../domain/case-display";
 import {
   LUNG_FINDINGS,
   LUNG_REGIONS,
@@ -58,7 +59,7 @@ export function LungFormFields({ draft, onChange }: LungFormFieldsProps) {
             <div className="lung-finding-heading">
               <h3>{label}</h3>
               <div className="lung-finding-guidance">
-                <p id={`lung-${key}-help`}>Choose Yes or No, or leave Not assessed selected.</p>
+                <p id={`lung-${key}-help`}>Choose Yes, No, or Unable to assess, or leave Not assessed selected.</p>
                 <span>{LUNG_REGIONS.filter((region) => draft.findings[region][key] !== "not_assessed").length} of {LUNG_REGIONS.length} regions recorded</span>
               </div>
             </div>
@@ -69,14 +70,14 @@ export function LungFormFields({ draft, onChange }: LungFormFieldsProps) {
                   <div className="lung-region-response" key={region}>
                     <strong className="lung-region-label" id={`lung-${key}-${region}`}>{region}</strong>
                     <div className="lung-assessment-options" role="group" aria-labelledby={`lung-${key}-${region}`} aria-describedby={`lung-${key}-help`}>
-                      {([ ["yes", "Yes"], ["no", "No"] ] as const).map(([value, optionLabel]) => (
+                      {ASSESSMENT_OPTIONS.filter(({ value }) => value !== "not_assessed").map(({ value, label: optionLabel }) => (
                         <label className="lung-assessment-option" key={value}>
                           <input type="radio" name={`lung-${key}-${region}`} value={value} checked={selected === value} onChange={() => updateRegion(region, key, value)} />
                           <span>{optionLabel}</span>
                         </label>
                       ))}
                       <label className="lung-not-assessed">
-                        <input type="checkbox" checked={selected === "not_assessed" || selected === "unable"} onChange={(event) => { if (event.currentTarget.checked) updateRegion(region, key, "not_assessed"); }} />
+                        <input type="checkbox" checked={selected === "not_assessed"} onChange={(event) => { if (event.currentTarget.checked) updateRegion(region, key, "not_assessed"); }} />
                         <span>Not assessed</span>
                       </label>
                     </div>

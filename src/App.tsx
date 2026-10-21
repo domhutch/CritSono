@@ -77,6 +77,7 @@ function App() {
   const printing = useCasePrinting(setError);
   const settingsWorkflow = useSettingsWorkflow({
     activePathway,
+    settings: appSettings,
     setActivePathway,
     setAppSettings,
     setTrainingModes,

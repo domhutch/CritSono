@@ -1,3 +1,4 @@
+import { ASSESSMENT_OPTIONS } from "../../domain/case-display";
 import {
   HEART_FINDINGS,
   HEART_VIEWS,
@@ -82,12 +83,12 @@ export function HeartFormFields({ draft, onChange }: HeartFormFieldsProps) {
         <legend>Assessment findings</legend>
         <div className="heart-findings-list">
           {HEART_FINDINGS.map(([key, label]) => {
-            const selected = draft.findings[key] === "unable" ? "not_assessed" : draft.findings[key];
+            const selected = draft.findings[key];
             return (
               <div className="heart-finding-control" key={key}>
                 <span className="heart-finding-label">{label}</span>
                 <div className="heart-assessment-options" role="group" aria-label={label}>
-                  {([ ["yes", "Yes"], ["no", "No"], ["not_assessed", "Not assessed"] ] as const).map(([value, optionLabel]) => (
+                  {ASSESSMENT_OPTIONS.map(({ value, label: optionLabel }) => (
                     <button className="heart-assessment-option" type="button" key={value} aria-pressed={selected === value} onClick={() => updateFinding(key, value)}>
                       {optionLabel}
                     </button>

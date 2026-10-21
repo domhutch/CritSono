@@ -13,6 +13,13 @@ export const ASSESSMENT_LABELS: Record<Assessment, string> = {
   unable: "Unable to assess",
 };
 
+export const ASSESSMENT_OPTIONS = [
+  { value: "yes", label: ASSESSMENT_LABELS.yes },
+  { value: "no", label: ASSESSMENT_LABELS.no },
+  { value: "unable", label: ASSESSMENT_LABELS.unable },
+  { value: "not_assessed", label: ASSESSMENT_LABELS.not_assessed },
+] as const;
+
 export function formatCaseDate(
   date: string,
   locale?: string,
@@ -22,6 +29,19 @@ export function formatCaseDate(
     locale,
     options,
   );
+}
+
+/** Keeps case numbers and list order aligned, even after an older case is edited. */
+export function compareCasesBySequence(first: LogbookCase, second: LogbookCase) {
+  return (
+    first.date.localeCompare(second.date) ||
+    first.createdAt.localeCompare(second.createdAt) ||
+    first.id.localeCompare(second.id)
+  );
+}
+
+export function sortCasesBySequence(cases: LogbookCase[]) {
+  return cases.slice().sort(compareCasesBySequence);
 }
 
 /** Numbers cases by pathway and scan date; IDs stay stable for storage and imports. */
@@ -35,14 +55,7 @@ export function getCaseSequenceNumbers(cases: LogbookCase[]) {
 
   const sequenceNumbers = new Map<string, number>();
   for (const pathwayCases of byPathway.values()) {
-    pathwayCases
-      .slice()
-      .sort(
-        (first, second) =>
-          first.date.localeCompare(second.date) ||
-          first.createdAt.localeCompare(second.createdAt) ||
-          first.id.localeCompare(second.id),
-      )
+    sortCasesBySequence(pathwayCases)
       .forEach((entry, index) => sequenceNumbers.set(entry.id, index + 1));
   }
   return sequenceNumbers;

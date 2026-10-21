@@ -77,6 +77,7 @@ export interface CaseMixSummary {
   protocolCoverage: string | null;
   scanTypeQuotas: Array<{
     scanType: string;
+    caseCategory?: string;
     minimumScans: number;
     minimumDirectlySupervised: number;
     recordedScans: number;

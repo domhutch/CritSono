@@ -13,7 +13,8 @@ export function getVascularQuotaMetrics(
   quotas: readonly Omit<CaseMixSummary["scanTypeQuotas"][number], "recordedScans" | "supervisedScans">[],
 ): CaseMixSummary["scanTypeQuotas"] {
   return quotas.map((quota, index) => {
-    const procedureCategory = VASCULAR_PROCEDURES[index]?.[0];
+    // Prefer the explicit category so quota order and procedure definitions can change independently.
+    const procedureCategory = quota.caseCategory ?? VASCULAR_PROCEDURES[index]?.[0];
     const quotaCases = cases.filter((entry) =>
       entry.procedureCategory === procedureCategory ||
       (procedureCategory === "picc_midline" &&

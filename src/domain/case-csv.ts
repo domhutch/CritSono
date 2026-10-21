@@ -33,9 +33,9 @@ export function createCasesCsv(cases: LogbookCase[], pathway: Pathway) {
         entry.supervisorName.trim(),
         entry.indication.trim(),
         entry.diagnosis.trim(),
-        entry.impressionCategory === "not_recorded" ? "Not recorded" : entry.impressionCategory,
-        entry.managementImpact === "not_recorded" ? "Not recorded" : entry.managementImpact,
-        entry.imageQuality === "not_recorded" ? "Not recorded" : entry.imageQuality,
+        entry.impressionCategory === "not_recorded" ? "Not recorded" : entry.impressionCategory === "abnormal" ? "Abnormal / pathology" : entry.impressionCategory === "normal" ? "Normal" : "Indeterminate",
+        entry.managementImpact === "not_recorded" ? "Not recorded" : entry.managementImpact === "changed" ? "Changed" : "Unchanged",
+        entry.imageQuality === "not_recorded" ? "Not recorded" : entry.imageQuality === "good" ? "Good" : entry.imageQuality === "acceptable" ? "Acceptable" : "Poor",
       ];
       return [...common, ...pathwayCsvValues(entry), entry.summary.trim(), entry.reflection.trim()];
     });

@@ -29,17 +29,20 @@ export const vascularFusicProfile: CurriculumProfile = {
   scanTypeQuotas: [
     {
       scanType: "Central venous catheter (internal jugular, with or without femoral)",
+      caseCategory: "cvc",
       minimumScans: 5,
       minimumDirectlySupervised: 3,
     },
     {
       scanType: "PICC or midline",
+      caseCategory: "picc_midline",
       minimumScans: 3,
       minimumDirectlySupervised: 1,
       note: "If PICC/midline scans are unavailable, these may be substituted with peripheral lines.",
     },
     {
       scanType: "Peripheral vascular access",
+      caseCategory: "peripheral_access",
       minimumScans: 2,
       minimumDirectlySupervised: 1,
     },

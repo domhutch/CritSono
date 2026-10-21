@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { compareCasesBySequence } from "../domain/case-display";
 import type { LogbookCase, Pathway } from "../domain/logbook";
 
 export type CaseFilter = "all" | "supervised" | "unsupervised";
@@ -78,11 +79,7 @@ export function useCaseList(entries: LogbookCase[], pathway: Pathway) {
           value.toLocaleLowerCase().includes(query),
         );
       })
-      .sort(
-        (first, second) =>
-          second.date.localeCompare(first.date) ||
-          second.updatedAt.localeCompare(first.updatedAt),
-      );
+      .sort((first, second) => compareCasesBySequence(second, first));
   }, [caseFilter, pathwayEntries, search]);
 
   function resetFilters() {
