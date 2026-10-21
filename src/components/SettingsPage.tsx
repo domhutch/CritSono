@@ -24,6 +24,7 @@ interface SettingsPageProps {
   onDownloadLungIcsForms: () => void;
   onDownloadAbdomenIcsForms: () => void;
   onExportCsv: () => void;
+  onExportUnencryptedBackup: () => Promise<void>;
   onExportBackup: (passphrase: string) => Promise<void>;
   onRestoreBackup: (event: ChangeEvent<HTMLInputElement>, passphrase: string) => Promise<void>;
 }
@@ -53,6 +54,7 @@ function SettingsPage({
   onDownloadLungIcsForms,
   onDownloadAbdomenIcsForms,
   onExportCsv,
+  onExportUnencryptedBackup,
   onExportBackup,
   onRestoreBackup,
 }: SettingsPageProps) {
@@ -243,7 +245,7 @@ function SettingsPage({
       <section className="settings-panel" aria-labelledby="backup-heading">
         <div className="settings-panel-heading">
           <h3 id="backup-heading">Backup and exports</h3>
-          <p>Encrypted backup files are protected with a passphrase you choose. The app does not store or recover it. CSV and PDF exports remain readable.</p>
+          <p>Export a copy of all cases and module settings. Encrypted backups are protected with a passphrase you choose; unencrypted JSON backups are readable by anyone with the file. The app does not store or recover your passphrase.</p>
         </div>
         <label className="settings-field">
           <span>Backup passphrase</span>
@@ -277,6 +279,14 @@ function SettingsPage({
           <button
             className="button button-secondary"
             type="button"
+            disabled={isHandlingBackup}
+            onClick={() => void onExportUnencryptedBackup()}
+          >
+            Export unencrypted backup
+          </button>
+          <button
+            className="button button-secondary"
+            type="button"
             disabled={isHandlingBackup || backupPassphrase.length < 14 || backupPassphrase !== confirmPassphrase}
             onClick={() => void onExportBackup(backupPassphrase).finally(() => {
               setBackupPassphrase("");
@@ -300,7 +310,7 @@ function SettingsPage({
             })}
           />
         </div>
-        <p className="backup-privacy">New backups are encrypted on this device before export. Older unencrypted JSON backups can still be restored. PDF and CSV exports are not encrypted; check free-text fields before sharing them. Keep the passphrase separate: it cannot be reset or recovered.</p>
+        <p className="backup-privacy">Encrypted backups are protected on this device before export. Unencrypted JSON backups, PDFs, and CSVs are not encrypted; anyone with those files can read them. Check free-text fields before sharing and store unencrypted files securely. Keep the passphrase separate: it cannot be reset or recovered.</p>
         {backupStatus && <p className="backup-status" role="status">{backupStatus}</p>}
       </section>
       <p className="settings-status" role="status">{status ?? "Settings are stored on this device and are not included in logbook backups."}</p>

@@ -33,10 +33,7 @@ function resolvePathwayModes(
   };
 }
 
-export async function createEncryptedLogbookBackup(
-  currentModes: Record<Pathway, boolean>,
-  passphrase: string,
-) {
+async function createSerializedLogbookBackup(currentModes: Record<Pathway, boolean>) {
   const [cases, storedModes] = await Promise.all([getCases(), getPathwayModes()]);
   const backup = createBackup(cases, resolvePathwayModes(storedModes, currentModes));
   const serialized = JSON.stringify(backup);
@@ -45,8 +42,31 @@ export async function createEncryptedLogbookBackup(
   }
 
   return {
-    payload: await encryptBackup(serialized, passphrase),
+    serialized,
     caseCount: cases.length,
+    exportedAt: backup.exportedAt,
+  };
+}
+
+export async function createEncryptedLogbookBackup(
+  currentModes: Record<Pathway, boolean>,
+  passphrase: string,
+) {
+  const backup = await createSerializedLogbookBackup(currentModes);
+  return {
+    payload: await encryptBackup(backup.serialized, passphrase),
+    caseCount: backup.caseCount,
+    exportedAt: backup.exportedAt,
+  };
+}
+
+export async function createUnencryptedLogbookBackup(
+  currentModes: Record<Pathway, boolean>,
+) {
+  const backup = await createSerializedLogbookBackup(currentModes);
+  return {
+    payload: backup.serialized,
+    caseCount: backup.caseCount,
     exportedAt: backup.exportedAt,
   };
 }

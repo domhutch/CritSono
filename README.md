@@ -9,8 +9,8 @@ recording in critical care.
   curriculum targets and progress tracking.
 - **Metrics and reports:** rolling metrics, print-ready A4 case reports,
   multi-page logbook PDFs, and CSV export.
-- **Encrypted backups:** versioned, passphrase-protected backups to a file or to
-  your own Google Drive.
+- **Backups:** versioned, passphrase-protected backups to a file or to your own
+  Google Drive, plus readable unencrypted JSON backups to a file.
 - **Installable PWA** with a path to bundled iOS and Android apps via Capacitor.
 
 ## Quick start

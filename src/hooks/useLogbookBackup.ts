@@ -11,6 +11,7 @@ import { csvFilename, createCasesCsv } from "../domain/case-csv";
 import type { LogbookCase, Pathway } from "../domain/logbook";
 import {
   createEncryptedLogbookBackup,
+  createUnencryptedLogbookBackup,
   MAX_BACKUP_FILE_SIZE,
   MAX_BACKUP_SIZE,
   restoreBackupFile,
@@ -112,6 +113,31 @@ export function useLogbookBackup({
         "Full CritSono: POCUS Logbook sample backup",
       );
       return delivery;
+    } finally {
+      setIsBusy(false);
+    }
+  }
+
+  async function exportUnencryptedBackup() {
+    setIsBusy(true);
+    setError(null);
+    setStatus(null);
+    try {
+      const backup = await createUnencryptedLogbookBackup(trainingModes);
+      const file = new Blob([backup.payload], {
+        type: "application/json",
+      });
+      const filename = `pocus-logbook-backup-${backup.exportedAt.replace(/[:.]/g, "-")}.json`;
+      const delivery = await deliverExport(file, filename, "Unencrypted CritSono: POCUS Logbook backup");
+      setStatus(delivery === "shared"
+        ? `Unencrypted backup prepared for sharing with ${backup.caseCount} ${backup.caseCount === 1 ? "case" : "cases"}. Anyone with the file can read it, so keep it somewhere secure.`
+        : `Unencrypted backup download started with ${backup.caseCount} ${backup.caseCount === 1 ? "case" : "cases"}. Anyone with the file can read it, so keep it somewhere secure.`);
+    } catch (cause) {
+      if (isShareCancelled(cause)) {
+        setStatus("Backup sharing was cancelled. No save was confirmed.");
+      } else {
+        setError(messageFrom(cause, "The backup could not be created or shared. Your cases remain stored on this device."));
+      }
     } finally {
       setIsBusy(false);
     }
@@ -230,6 +256,7 @@ export function useLogbookBackup({
     isBusy,
     exportAdminSampleBackup,
     exportBackup,
+    exportUnencryptedBackup,
     exportCsv,
     restoreBackupFromFile,
     uploadBackupToGoogleDrive,

@@ -15,14 +15,21 @@ test data, download a backup from the current site and restore it on the
 destination site. Clearing browser site data or removing the app can permanently
 remove local cases, so keep a separate copy of the backup somewhere else.
 
-## Encrypted backup and restore
+## Backups and restore
 
-Use **Export encrypted backup** in Settings to save a versioned copy of all cases
-and pathway training modes. Choose and confirm a passphrase of at least 14
-characters. The app encrypts the backup on this device using PBKDF2-HMAC-SHA-256
-and AES-256-GCM before downloading or opening the native share sheet. The
-passphrase is never stored by the app; losing it means the backup cannot be
-decrypted. Keep the passphrase separately from the backup file.
+Settings offers both encrypted and unencrypted backups. Both save a versioned
+copy of all cases and pathway training modes.
+
+Use **Export encrypted backup** to protect the file with a passphrase. Choose and
+confirm a passphrase of at least 14 characters. The app encrypts the backup on
+this device using PBKDF2-HMAC-SHA-256 and AES-256-GCM before downloading or
+opening the native share sheet. The passphrase is never stored by the app; losing
+it means the backup cannot be decrypted. Keep the passphrase separately from the
+backup file.
+
+Use **Export unencrypted backup** to save a readable JSON copy without a
+passphrase. Anyone who obtains the file can read every case in it, so store it
+securely and review free-text fields before sharing it.
 
 Use **Restore / merge backup** to merge a copy into this device: new case IDs are
 added, existing IDs and local preferences are kept, and repeated restores do not
@@ -59,8 +66,9 @@ access from the user's Google Account security settings when disconnecting.
 ## Patient data and safety
 
 Encrypted backups conceal their contents from someone who only obtains the backup
-file, but they do not encrypt the app's local IndexedDB, CSV exports, or PDF
-reports. Google Drive stores only the encrypted backup, but provider
+file. Unencrypted JSON backups, CSV exports, and PDF reports are readable by
+anyone who obtains them, and none of these exports encrypt the app's local
+IndexedDB. Google Drive stores only the encrypted backup, but provider
 infrastructure still processes connection metadata such as the account used, IP
 address, and upload timing.
 

@@ -417,6 +417,7 @@ function App() {
               appSettings.operatorName,
             )}
             onExportCsv={() => void backup.exportCsv(pathwayEntries, activePathway)}
+            onExportUnencryptedBackup={() => backup.exportUnencryptedBackup()}
             onExportBackup={(passphrase) => backup.exportBackup(passphrase)}
             onRestoreBackup={(event, passphrase) => backup.restoreBackupFromFile(event, passphrase)}
           />
